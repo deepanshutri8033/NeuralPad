@@ -11,7 +11,7 @@
 
 **A modern, cloud-based web IDE and code development workspace built with React 19, Monaco Editor, and a Microservices backend architecture.**
 
-[Features](#-features) • [Architecture](#-architecture) • [Getting Started](#-getting-started) • [API Gateway](#-api-gateway-endpoints) • [Interview Prep Guide](INTERVIEW_PREP.md)
+[Features](#-features) • [Architecture](#-architecture) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [API Gateway](#-api-gateway-endpoints) • [Roadmap](#-roadmap)
 
 </div>
 
@@ -71,6 +71,21 @@
 
 ---
 
+## 🛠️ Tech Stack
+
+| Domain | Technologies |
+|---|---|
+| **Frontend** | React 19, Vite, Tailwind CSS v4, Redux Toolkit, React Router v7 |
+| **Code Editor** | `@monaco-editor/react` (VS Dark theme, auto-layout, multi-language) |
+| **Icons & Animations**| Lucide React, Motion (`motion/react`) |
+| **API Gateway** | Express 5, `express-http-proxy`, `cors`, `cookie-parser`, `morgan` |
+| **Microservices** | Express 5, Node.js (ES Modules) |
+| **Authentication** | Firebase Authentication (Client SDK) + Firebase Admin SDK (Backend) |
+| **Databases** | MongoDB Atlas (Mongoose 8), Redis (`ioredis`) |
+| **DevOps / Container**| Docker, Docker Compose |
+
+---
+
 ## 📂 Repository Structure
 
 ```bash
@@ -89,7 +104,6 @@ NeuralPad/
 │   │   ├── redux/       # userSlice, projectSlice, store
 │   │   └── features/    # API integration calls
 │   └── firebase.js      # Client Firebase configuration
-├── INTERVIEW_PREP.md    # In-depth technical interview guide & talking points
 └── README.md
 ```
 
@@ -171,7 +185,7 @@ Open **`http://localhost:5173`** in your browser.
 
 All requests route through the Gateway on port `8000`:
 
-| Method | Endpoint | Service Proxied | Protected? | Notes |
+| Method | Endpoint | Service Proxied | Protected? | Description |
 |---|---|---|---|---|
 | `POST` | `/api/auth/login` | Auth (:8001) | No | Verifies token, sets session cookie |
 | `POST` | `/api/auth/logout` | Auth (:8001) | No | Deletes Redis session, clears cookie |
@@ -190,9 +204,12 @@ All requests route through the Gateway on port `8000`:
 
 ---
 
-## 📚 Interview Preparation
+## 🗺️ Roadmap
 
-For an in-depth breakdown of system design decisions, algorithmic trade-offs (e.g. $O(N)$ tree construction), and top interview questions with answers, see [**`INTERVIEW_PREP.md`**](INTERVIEW_PREP.md).
+- [ ] **Interactive Terminal & Execution Service**: Sandboxed code execution in isolated Docker containers via WebSockets and `node-pty`.
+- [ ] **AI Assistant Service**: Dedicated microservice for streaming LLM-powered code completion, explanation, and error fixing.
+- [ ] **Real-time Collaboration**: Multi-cursor editing using CRDTs / Operational Transformation over WebSockets.
+- [ ] **Package Manager Integration**: In-browser dependency installation and bundling.
 
 ---
 
