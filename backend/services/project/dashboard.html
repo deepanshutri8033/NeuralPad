@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuralPad Dashboard</title>
+    <style>
+      :root {
+        --bg: #070b14;
+        --panel: #0f172a;
+        --panel-soft: #111827;
+        --border: rgba(148, 163, 184, 0.18);
+        --text: #e5eefb;
+        --muted: #94a3b8;
+        --primary: #60a5fa;
+        --primary-strong: #2563eb;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --shadow: rgba(15, 23, 42, 0.5);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(96, 165, 250, 0.18), transparent 25%), var(--bg);
+        color: var(--text);
+      }
+
+      .page {
+        min-height: 100vh;
+        padding: 32px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1280px;
+        margin: 0 auto 28px;
+        padding: 18px 22px;
+        background: rgba(15, 23, 42, 0.82);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 25px var(--shadow);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        background: linear-gradient(135deg, #dbeafe, #60a5fa);
+        color: #0b1120;
+      }
+
+      .brand-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .topbar-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .chip {
+        border: 1px solid var(--border);
+        background: rgba(148, 163, 184, 0.08);
+        color: var(--text);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        letter-spacing: 0.03em;
+      }
+
+      .primary-btn {
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+        color: white;
+        font-weight: 600;
+        padding: 10px 16px;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+      }
+
+      .grid {
+        display: grid;
+        gap: 22px;
+        max-width: 1280px;
+        margin: 0 auto;
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+
+      .panel {
+        background: rgba(15, 23, 42, 0.82);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: 0 12px 30px var(--shadow);
+      }
+
+      .hero {
+        padding: 28px;
+      }
+
+      .eyebrow {
+        color: var(--primary);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 14px 0 12px;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        font-size: 1rem;
+        max-width: 620px;
+        line-height: 1.7;
+      }
+
+      .quick-actions {
+        margin-top: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(120px, 1fr));
+        gap: 16px;
+        margin-top: 28px;
+      }
+
+      .stat {
+        background: rgba(148, 163, 184, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+      }
+
+      .stat-value {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .stat-label {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .sidebar {
+        padding: 24px;
+      }
+
+      .section-title {
+        font-size: 0.82rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        margin-bottom: 16px;
+      }
+
+      .project-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .project-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 14px;
+        border-radius: 12px;
+        background: rgba(148, 163, 184, 0.04);
+        border: 1px solid rgba(148, 163, 184, 0.12);
+      }
+
+      .project-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .project-name {
+        font-weight: 600;
+      }
+
+      .project-date {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        background: var(--success);
+        border-radius: 50%;
+        box-shadow: 0 0 15px rgba(52, 211, 153, 0.8);
+      }
+
+      .activity {
+        margin-top: 22px;
+      }
+
+      .activity-item {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 0;
+        border-top: 1px solid rgba(148, 163, 184, 0.12);
+      }
+
+      .badge {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .badge.blue { background: rgba(96, 165, 250, 0.12); color: #93c5fd; }
+      .badge.green { background: rgba(52, 211, 153, 0.12); color: #6ee7b7; }
+      .badge.yellow { background: rgba(251, 191, 36, 0.12); color: #fcd34d; }
+
+      @media (max-width: 900px) {
+        .grid { grid-template-columns: 1fr; }
+        .page { padding: 18px; }
+        .topbar { flex-direction: column; align-items: flex-start; gap: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">N</div>
+          <div class="brand-name">NeuralPad</div>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="chip">AI Copilot Enabled</div>
+          <button class="primary-btn">New Project</button>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="panel hero">
+          <div class="eyebrow">Workspace Overview</div>
+          <h1>Build smarter, ship faster.</h1>
+          <p class="subtitle">
+            Keep your projects, ideas, and active workflows in one place with coding suggestions enabled throughout the session.
+          </p>
+
+          <div class="quick-actions">
+            <button class="primary-btn">Open editor</button>
+            <button class="chip" style="padding: 10px 16px; cursor: pointer;">View notes</button>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat">
+              <span class="stat-value">18</span>
+              <span class="stat-label">Active projects</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">6</span>
+              <span class="stat-label">Suggestions today</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">92%</span>
+              <span class="stat-label">Focus score</span>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel sidebar">
+          <div class="section-title">Recent projects</div>
+          <ul class="project-list">
+            <li class="project-item">
+              <div class="project-meta">
+                <div class="project-name">AI writing assistant</div>
+                <div class="project-date">Updated 2h ago</div>
+              </div>
+              <span class="dot"></span>
+            </li>
+            <li class="project-item">
+              <div class="project-meta">
+                <div class="project-name">Landing page revamp</div>
+                <div class="project-date">Updated 5h ago</div>
+              </div>
+              <span class="dot"></span>
+            </li>
+            <li class="project-item">
+              <div class="project-meta">
+                <div class="project-name">API automation</div>
+                <div class="project-date">Updated yesterday</div>
+              </div>
+              <span class="dot"></span>
+            </li>
+          </ul>
+
+          <div class="activity">
+            <div class="section-title">Activity</div>
+            <div class="activity-item">
+              <div class="badge blue">AI</div>
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">Code suggestion generated</div>
+                <div style="color: var(--muted); font-size: 0.8rem;">2 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="badge green">OK</div>
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">Build check passed</div>
+                <div style="color: var(--muted); font-size: 0.8rem;">19 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="badge yellow">!</div>
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">Review pending</div>
+                <div style="color: var(--muted); font-size: 0.8rem;">1 hour ago</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+  </body>
+</html>
